@@ -13,9 +13,15 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap
+//= require jquery.classycompare
 //= require_tree .
 
 $('document').ready(function() {
+  //This will allow a smooth scroll for anchor tag with the scroll class (http://www.sycha.com/jquery-smooth-scrolling-internal-anchor-links)
+  $(".scroll").click(function(event){
+    event.preventDefault();
+    $('html,body').animate({scrollTop:$(this.hash).offset().top}, 500);
+  });
 
   // display validation errors for the "request invitation" form
   if ($('.alert-error').length > 0) {
@@ -68,3 +74,13 @@ function loadSocial() {
       $.getScript('https://apis.google.com/js/plusone.js');
     }
 }
+
+$(window).load(function() {
+    $('.comparison_before_after').ClassyCompare({
+        defaultgap: 200,
+        leftgap: 10,
+        rightgap: 10,
+        caption: false,
+        reveal: 0.5
+    });
+});
