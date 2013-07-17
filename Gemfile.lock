@@ -86,6 +86,7 @@ GEM
       mail (~> 2.2)
     erubis (2.7.0)
     eventmachine (1.0.3)
+    excon (0.25.1)
     execjs (1.4.0)
       multi_json (~> 1.0)
     factory_girl (4.2.0)
@@ -101,6 +102,14 @@ GEM
     gibbon (0.4.6)
       httparty
       multi_json (>= 1.3.4)
+    heroku (2.39.4)
+      heroku-api (~> 0.3.7)
+      launchy (>= 0.3.2)
+      netrc (~> 0.7.7)
+      rest-client (~> 1.6.1)
+      rubyzip
+    heroku-api (0.3.14)
+      excon (~> 0.25.1)
     hike (1.2.3)
     httparty (0.11.0)
       multi_json (~> 1.0)
@@ -122,9 +131,11 @@ GEM
     multi_json (1.7.7)
     multi_test (0.0.1)
     multi_xml (0.5.4)
+    netrc (0.7.7)
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
     orm_adapter (0.4.0)
+    pg (0.15.1)
     polyglot (0.3.3)
     quiet_assets (1.0.2)
       railties (>= 3.1, < 5.0)
@@ -153,6 +164,8 @@ GEM
     rake (10.1.0)
     rdoc (3.12.2)
       json (~> 1.4)
+    rest-client (1.6.7)
+      mime-types (>= 1.16)
     rolify (3.2.0)
     rspec-core (2.14.3)
     rspec-expectations (2.14.0)
@@ -165,6 +178,7 @@ GEM
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
       rspec-mocks (~> 2.14.0)
+    rubyzip (0.9.9)
     sass (3.2.9)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
@@ -215,9 +229,11 @@ DEPENDENCIES
   factory_girl_rails
   figaro
   gibbon
+  heroku
   hub
   jquery-rails
   launchy
+  pg
   quiet_assets
   rails (= 3.2.13)
   rolify
