@@ -44,7 +44,7 @@ $('document').ready(function() {
     return false;
   });
 
-})
+});
 
 // load social sharing scripts if the page includes a Twitter "share" button
 function loadSocial() {
@@ -75,6 +75,21 @@ function loadSocial() {
     }
 }
 
+function adjust_before_after(width) {
+  old_bg_width  = $('.comparison_before_after').width();
+  $('.comparison_before_after').css("width",width);
+  change_factor = old_bg_width/$('.comparison_before_after').width();
+  $('.comparison_before_after').css("height",$('.comparison_before_after').height()/change_factor);
+  $('.uc-bg').css('width',$('.comparison_before_after').width());
+  $('.uc-bg').css('height',$('.comparison_before_after').height());
+  $('.uc-bg').css('background-size',$('.comparison_before_after').width());
+  $('.uc-mask').css('background-size',$('.comparison_before_after').width());
+  $('.uc-mask').css('width',$('.uc-mask').width()/change_factor);
+  $('.uc-mask').css('height',$('.comparison_before_after').height());
+}
+$(window).resize(function(){
+  adjust_before_after($(window).width());
+})
 $(window).load(function() {
     $('.comparison_before_after').ClassyCompare({
         defaultgap: 200,
@@ -83,4 +98,5 @@ $(window).load(function() {
         caption: false,
         reveal: 0.5
     });
+    adjust_before_after($(window).width());
 });

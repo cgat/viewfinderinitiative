@@ -31,7 +31,13 @@
   width: 60%;
   margin: 30px auto;
 }
-
+.comparison_before_after #welcome {
+  position: absolute;
+  right: 5%;
+  top: 43%;
+  left: 40%;
+  z-index: 1049;
+}
 .landing_page_section {
   margin-top: -40px;
   padding-top: 40px;
