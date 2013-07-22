@@ -11,7 +11,34 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130715085606) do
+ActiveRecord::Schema.define(:version => 20130722043446) do
+
+  create_table "historic_images", :force => true do |t|
+    t.string   "image"
+    t.date     "date"
+    t.integer  "station_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "historic_images", ["station_id"], :name => "index_historic_images_on_station_id"
+
+  create_table "projects", :force => true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  create_table "repeat_images", :force => true do |t|
+    t.string   "image"
+    t.date     "date"
+    t.integer  "historic_image_id"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
+  add_index "repeat_images", ["historic_image_id"], :name => "index_repeat_images_on_historic_image_id"
 
   create_table "roles", :force => true do |t|
     t.string   "name"
@@ -23,6 +50,28 @@ ActiveRecord::Schema.define(:version => 20130715085606) do
 
   add_index "roles", ["name", "resource_type", "resource_id"], :name => "index_roles_on_name_and_resource_type_and_resource_id"
   add_index "roles", ["name"], :name => "index_roles_on_name"
+
+  create_table "stations", :force => true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.integer  "project_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "stations", ["project_id"], :name => "index_stations_on_project_id"
+
+  create_table "user_repeat_images", :force => true do |t|
+    t.string   "image"
+    t.date     "date"
+    t.integer  "user_id"
+    t.integer  "historic_image_id"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
+  add_index "user_repeat_images", ["historic_image_id"], :name => "index_user_repeat_images_on_historic_image_id"
+  add_index "user_repeat_images", ["user_id"], :name => "index_user_repeat_images_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
