@@ -1,0 +1,11 @@
+<h1>Verify Alignment</h1>
+<div class='container'>
+      <div class="verify_before_after">
+        <%= image_tag @user_repeat_image.image.medium.url %>
+        <%= image_tag @user_repeat_image.repeat_pair.repeat_image.image.medium.url %>
+      </div>
+      <div class="actions">
+        <%= link_to "Readjust & Try Again", user_repeat_image_alignment_path(@user_repeat_image.id, :align), class: "btn btn-primary" %>
+        <%= link_to "Done", station_path(@user_repeat_image.repeat_pair.station), class: "btn btn-primary" %>
+      </div>
+</div>

@@ -1,0 +1,2 @@
+module HistoricImagesHelper
+end

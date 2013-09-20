@@ -1,0 +1,42 @@
+<% if @user_repeat_image.points.blank? %>
+<script type="text/javascript">
+    $(document).on('pointsable_user_repeat_loaded',function() {
+      //add alignment points to user repeat image in default position (user still has to move them)
+      var numberOfPoints = <%= @user_repeat_image.repeat_pair.repeat_image.points.length || 3 %>;
+      var userRepeatWidth = <%= @user_repeat_image.width || 1000 %>
+      for (var i=1; i<=numberOfPoints; i++) {
+        pointsable_user_repeat.addPoint({x: userRepeatWidth/(numberOfPoints+1)*i, y: 200, label: "p"+i });
+      }
+
+    });
+</script>
+<% end %>
+<h1>Image Alignment</h1>
+<div class='container'>
+  <%= form_for(@user_repeat_image, url: wizard_path, method: :put) do |f| %>
+    <% if @user_repeat_image.errors.any? %>
+      <div id="error_explanation" class='row'>
+        <div class='span12'>
+        <h2><%= pluralize(@user_repeat_image.errors.count, "error") %> prohibited this user_repeat_image from being saved:</h2>
+        <ul>
+        <% @user_repeat_image.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+    <% end %>
+    <div class='row'>
+      <div class='span6'>
+        <%= pointsable_form(@user_repeat_image, f, container: "pointsable_user_repeat", viewing_width: 500, add_points_widget: false, remove_points_widget: false) %>
+      </div>
+      <div class='span6'>
+        <%= pointsable_show(@user_repeat_image.repeat_pair.repeat_image, container: "pointsable_repeat", viewing_width: 500) %>
+      </div>
+    </div>
+    <div class="actions">
+      <%= link_to "Edit Upload", edit_user_repeat_image_path(@user_repeat_image), class: "btn btn-primary" %>
+      <%= f.submit "Align", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

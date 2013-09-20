@@ -1,5 +1,8 @@
 class User < ActiveRecord::Base
   rolify
+
+  has_many :user_repeat_images
+
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :confirmable,
@@ -62,7 +65,7 @@ class User < ActiveRecord::Base
 
   def add_user_to_mailchimp
       return if email.include?(ENV['ADMIN_EMAIL'])
-      mailchimp = Gibbon.new
+      mailchimp = Gibbon::API.new
       result = mailchimp.list_subscribe({
         :id => ENV['MAILCHIMP_LIST_ID'],
         :email_address => self.email,
@@ -76,7 +79,7 @@ class User < ActiveRecord::Base
     end
 
   def remove_user_from_mailchimp
-    mailchimp = Gibbon.new
+    mailchimp = Gibbon::API.new
     result = mailchimp.list_unsubscribe({
       :id => ENV['MAILCHIMP_LIST_ID'],
       :email_address => self.email,

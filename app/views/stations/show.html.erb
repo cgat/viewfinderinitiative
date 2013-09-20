@@ -1,0 +1,38 @@
+<h1><%= @station.name %></h1>
+<div class='container'>
+    <div class='row'>
+      <div class='comparison_repeat_historic'>
+        <div class='image_with_date repeat_image'>
+          <div class='image_date'>2011</div>
+          <%= image_tag @station.repeat_image.image.medium.url, class: "repeat_image" %>
+        </div>
+        <div class='image_with_date historic_image'>
+          <div class='image_date'>1887</div>
+          <%= image_tag @station.historic_image.image.medium.url, class: "historic_image" %>
+        </div>
+      </div>
+    <div id="station_description">
+      <%= @station.description %>
+    </div>
+  </div>
+  <% if current_user.present? %>
+  <div class='row'>
+    <h2>Your Repeat<%= 's' if @station.user_repeat_images.with_user(current_user).count > 1 %></h2>
+    <% @station.user_repeat_images.with_user(current_user).each do |u_image| %>
+      <div class='comparison_repeat_historic'>
+        <div class='image_with_date repeat_image'>
+          <div class='image_date'><%= u_image.date.strftime('%B %d, %Y') %></div>
+          <%= image_tag u_image.image.medium.url, class: "user_repeat_image" %>
+        </div>
+        <div class='image_with_date historic_image'>
+          <div class='image_date'>1887</div>
+          <%= image_tag @station.historic_image.image.medium.url, class: "historic_image" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <% end %>
+</div>
+
+
+

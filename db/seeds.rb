@@ -21,20 +21,24 @@ user.save!
 
 lorem = <<-text
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus condimentum leo non eros viverra, eget accumsan risus tincidunt.
-Morbi gravida fermentum viverra. Maecenas pulvinar convallis commodo.
-Duis tincidunt tellus dolor, ornare interdum nisi euismod ac.
+Morbi gravida fermentum viverra.
 text
 project = Project.create!(name: "Moving Ice", description: lorem)
 stations = Station.create!([{name: "Illecillewaet Glacier", description: lorem, project_id: project.id},{name: "Athabasca Glacier", description: lorem, project_id: project.id}])
-h_image = HistoricImage.create!(station_id: stations.first.id, date: Date.new(1887))
+station1 = stations.first
+repeat_pair = station1.repeat_pairs.create
+h_image = HistoricImage.new(date: Date.new(1887))
 h_image.image.store!(File.open(File.join(Rails.root, "app","assets", "images",'NOT1887_V1707_background.jpg')))
 h_image.save!
-r_image = RepeatImage.create!(historic_image_id: h_image.id, date: Date.new(2011))
+r_image = RepeatImage.new(date: Date.new(2011))
 r_image.image.store!(File.open(File.join(Rails.root, "app","assets","images","MLP2011_V1707_background.jpg")))
 r_image.save!
-
+repeat_pair.historic_image = h_image
+repeat_pair.repeat_image = r_image
+repeat_pair.save!
 test_user = User.find_or_create_by_email name: ENV['TEST_NAME'].dup, email: ENV['TEST_EMAIL'].dup, password: ENV['TEST_PASSWORD'].dup, password_confirmation: ENV['TEST_PASSWORD'].dup
-t_image = UserRepeatImage.create!(date: Date.today)
+t_image = UserRepeatImage.new(date: Date.today)
 t_image.user = test_user
 t_image.image.store!(File.open(File.join(Rails.root, "app","assets","images","MLP2011_V1707_background.jpg")))
+t_image.repeat_pair = repeat_pair
 t_image.save!

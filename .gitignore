@@ -10,7 +10,8 @@
 # http://github.com/RailsApps/rails-composer/issues
 #----------------------------------------------------------------------------
 
-
+# uploaded files (development)
+/public/uploads
 
 # bundler state
 /.bundle

@@ -14,6 +14,8 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require jquery.classycompare
+//= require kinetic-v4.5.4
+//= require pointsable/Pointsable
 //= require_tree .
 
 $('document').ready(function() {
@@ -92,6 +94,16 @@ $(window).resize(function(){
 })
 $(window).load(function() {
     $('.comparison_before_after').ClassyCompare({
+        defaultgap: 200,
+        leftgap: 10,
+        rightgap: 10,
+        caption: false,
+        reveal: 0.5
+    });
+    adjust_before_after($(window).width());
+});
+$(window).load(function() {
+    $('.verify_before_after').ClassyCompare({
         defaultgap: 200,
         leftgap: 10,
         rightgap: 10,

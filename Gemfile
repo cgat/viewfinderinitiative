@@ -1,11 +1,17 @@
 source 'https://rubygems.org'
 
 ruby '2.0.0'
-gem 'heroku'
+
+gem 'pointsable', path: '/Users/chrisgat/projects/pointsable'
 gem "gibbon"
 gem 'rails', '3.2.13'
 gem 'carrierwave'
+gem "mini_magick"
 gem 'fog', '~> 1.3.1'
+gem 'pg'
+
+gem 'squeel'
+gem 'wicked'
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
@@ -26,15 +32,16 @@ group :development do
   gem 'debugger'
 end
 group :development, :test do
-  gem 'sqlite3'
   gem 'factory_girl_rails'
   gem 'rspec-rails'
+  gem 'jazz_hands'
 end
 group :production do
   gem 'thin'
-  gem 'pg'
 end
 group :test do
+  gem 'spork-rails'
+  gem 'shoulda'
   gem 'capybara'
   gem 'cucumber-rails', :require=>false
   gem 'database_cleaner'

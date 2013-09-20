@@ -2,13 +2,11 @@
 require 'carrierwave/processing/mime_types'
 
 class BasicImageUploader < CarrierWave::Uploader::Base
-
-  # Include RMagick or MiniMagick support:
-  # include CarrierWave::RMagick
-  # include CarrierWave::MiniMagick
+  include CarrierWave::MiniMagick
   include CarrierWave::MimeTypes
 
   process :set_content_type
+  before :cache, :set_model_width_height
 
   # Choose what kind of storage to use for this uploader:
   storage :file
@@ -20,6 +18,17 @@ class BasicImageUploader < CarrierWave::Uploader::Base
     "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
   end
 
+  version :large do
+    process resize_to_fit: [ENV['LARGE_FIT_SIZE'].to_i, ENV['LARGE_FIT_SIZE'].to_i]
+  end
+
+  version :medium, from_version: :large  do
+    process resize_to_fit: [ENV['MEDIUM_FIT_SIZE'].to_i, ENV['MEDIUM_FIT_SIZE'].to_i]
+  end
+
+  version :thumb, from_version: :medium do
+    process resize_to_fit: [ENV['THUMB_FIT_SIZE'].to_i, ENV['THUMB_FIT_SIZE'].to_i]
+  end
   # Provide a default URL as a default if there hasn't been a file uploaded:
   # def default_url
   #   # For Rails 3.1+ asset pipeline compatibility:
@@ -51,5 +60,15 @@ class BasicImageUploader < CarrierWave::Uploader::Base
   # def filename
   #   "something.jpg" if original_filename
   # end
+
+  private
+
+  def set_model_width_height(new_file)
+    if model.width.blank? || model.height.blank?
+      magick = ::MiniMagick::Image.read(new_file)
+      model.width = magick[:width]
+      model.height = magick[:height]
+    end
+  end
 
 end

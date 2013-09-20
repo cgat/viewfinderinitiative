@@ -1,0 +1,16 @@
+<%= simple_form_for @user_repeat_image do |f| %>
+  <%= f.error_messages %>
+  <%= f.hidden_field :user_id %>
+  <%= f.hidden_field :repeat_pair_id %>
+  <% if f.object.image.present? %>
+    <%= image_tag(f.object.image.thumb.url) %>
+    <%= f.input :image, as: :file, label: "Replace Image" %>
+    <%= f.hidden_field :image_cache %>
+  <% else %>
+    <%= f.input :image, as: :file %>
+    <%= f.hidden_field :image_cache %>
+  <% end %>
+  <%= f.input :date %>
+  <%= f.input :notes, label: "Notes From Your Trip" %>
+  <%= f.submit "Upload", class: "btn btn-primary" %>
+<% end %>

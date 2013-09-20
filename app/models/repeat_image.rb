@@ -1,5 +1,8 @@
 class RepeatImage < ActiveRecord::Base
-  belongs_to :historic_image
-  attr_accessible :date, :image, :historic_image_id
+
+  acts_as_pointsable url_method: "image.url"
+
+  has_one :repeat_pair
+  attr_accessible :date, :image, :width, :height
   mount_uploader :image, BasicImageUploader
 end

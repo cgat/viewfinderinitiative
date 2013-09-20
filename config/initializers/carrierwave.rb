@@ -11,3 +11,10 @@ CarrierWave.configure do |config|
   config.fog_directory  = fog_dir                    # required
   config.fog_public     = true
 end
+
+if Rails.env.test? or Rails.env.cucumber?
+  CarrierWave.configure do |config|
+    config.storage = :file
+    config.enable_processing = false
+  end
+end

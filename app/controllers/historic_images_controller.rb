@@ -1,0 +1,2 @@
+class HistoricImagesController < ApplicationController
+end

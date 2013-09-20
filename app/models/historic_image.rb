@@ -1,5 +1,5 @@
 class HistoricImage < ActiveRecord::Base
-  belongs_to :station
-  attr_accessible :date, :image, :station_id
+  has_one :repeat_pair
+  attr_accessible :date, :image
   mount_uploader :image, BasicImageUploader
 end
